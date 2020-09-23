@@ -104,7 +104,7 @@ class _HomeState extends State<Home> {
                                 color: Colors.white,
                               ),
                             ),
-                            onPressed: (){OpenFile.open(file[index].path);},
+                          
                           ),
                         ],
                       ),
@@ -116,7 +116,7 @@ class _HomeState extends State<Home> {
     );
   }
   void _listofFiles() async {
-    directory = (await getExternalStorageDirectory()).parent.parent.parent.parent.path;
+
     setState(() {
       file = io.Directory("$directory/HibeScanner/").listSync();  //use your folder name insted of resume.
     });
