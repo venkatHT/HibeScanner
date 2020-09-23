@@ -255,7 +255,7 @@ class _SfgState extends State<Sfg> {
                   try{
                     print("creating folder");
                     final tempDir = await getExternalStorageDirectory();
-                    final myImagePath = '${tempDir.parent.parent.parent.parent.path}/HibeScanner' ;
+                    final myImagePath = '${tempDir.parent.parent.parent.parent.path' ;
                     final myImgDir = await new Directory(myImagePath).create();
                     final output = File(path.join(myImgDir.path, '${DateTime.now().toString().replaceAll(" ","_")}.pdf'));
                     await output.writeAsBytes(pdf.save());
