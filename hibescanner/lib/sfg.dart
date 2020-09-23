@@ -42,80 +42,7 @@ class _SfgState extends State<Sfg> {
   var originalBytes;
   var grayBytes;
   bool isGrayBytes = false;
-  bool isOriginalBytes = false;
-  bool isWhiteBoardBytes = false;
-  bool isRotating = false;
-  int angle = 0;
-  List<Asset> images = List<Asset>();
-  List<File> imgFile = List<File>();
-  List<dynamic> img = [];
-  final pdf = pw.Document();
-  int i=0;
-  bool _visible = false;
-  static GlobalKey<AnimatedListState> animatedListKey = GlobalKey<AnimatedListState>();
-
-  File _image;
-  Future<void> getimageditor() {
-    final geteditimage =
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return ImageEditorPro(
-        appBarColor: Colors.grey[800],
-        bottomBarColor: Colors.grey[700],
-        imagefile: imgFile[i],
-      );
-    })
-    ).then((geteditimage) {
-      print("loading image");
-      if (geteditimage != null) {
-        setState(() {
-          _image = geteditimage;
-          imgFile[i] =  _image;
-        });
-      }else{
-        print("null");
-      }
-    }).catchError((er) {
-      print(er);
-    });
-  }
-
-  void _toggle(int i){
-    setState(() {
-      this.i = i;
-      _visible = !_visible;
-    });
-  }
-
-  void delItem(){
-    setState(() {
-      images.removeAt(i);
-      imgFile.removeAt(i);
-    });
-  }
-
-
-
-
-  Future<void> loadAssets() async {
-    List<Asset> resultList = List<Asset>();
-
-    try {
-      resultList = await MultiImagePicker.pickImages(
-        maxImages: 50,
-        enableCamera: true,
-        selectedAssets: images,
-        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
-        materialOptions: MaterialOptions(
-          actionBarColor: "#424242",
-          actionBarTitle: "Select Images",
-          allViewTitle: "All Photos",
-          useDetailsView: false,
-          selectCircleStrokeColor: "#000000",
-        ),
-      );
-    } on Exception catch (e) {
-      e.toString();
-    }
+ 
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -196,28 +123,7 @@ class _SfgState extends State<Sfg> {
                       child: Image.file(file),
                       onTap: (){_toggle(index);},
                     ),
-                  );
-                }),
-              ) ,
-            ),
-          ),
-          Expanded(
-            flex: 1,
-
-            child: Container(
-
-              child: FlatButton.icon(
-
-                onPressed: () async{
-                  Navigator.pop(context);
-
-    Fluttertoast.showToast(
-    msg: 'PDF created.',
-    toastLength: Toast.LENGTH_LONG,
-    gravity: ToastGravity.CENTER,
-    timeInSecForIos: 1,
-    backgroundColor: Colors.black,
-    textColor: Colors.white
+                  
     );
                   for(int i=0;i<imgFile.length;i++){
                     img.add(PdfImage.file(
@@ -255,20 +161,7 @@ class _SfgState extends State<Sfg> {
                   try{
                     print("creating folder");
                     final tempDir = await getExternalStorageDirectory();
-                    final myImagePath = '${tempDir.parent.parent.parent.parent.path' ;
-                    final myImgDir = await new Directory(myImagePath).create();
-                    final output = File(path.join(myImgDir.path, '${DateTime.now().toString().replaceAll(" ","_")}.pdf'));
-                    await output.writeAsBytes(pdf.save());
-                  }catch(Exception){
-
-                  }
-                },
-                color: Colors.black,
-
-                icon: Icon(Icons.picture_as_pdf,
-                  color: Colors.white,
-                ),
-                label: Text(
+             
                   "Convert to PDF",
                   style: TextStyle(
                     color: Colors.white,
